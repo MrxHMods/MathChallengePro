@@ -412,6 +412,64 @@
       100% { transform: scale(1); }
     }
 
+    /* Timer Styles */
+    .timer-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .timer-bar {
+      flex: 1;
+      height: 8px;
+      background: var(--border);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      max-width: 200px;
+    }
+
+    .timer-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #60a5fa);
+      border-radius: var(--radius-full);
+      transition: width 1s linear, background 0.3s ease;
+      width: 100%;
+    }
+
+    .timer-bar-fill.warning {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+
+    .timer-bar-fill.danger {
+      background: linear-gradient(90deg, #ef4444, #f87171);
+      animation: pulse 0.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .timer-text {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .timer-text.warning {
+      color: #d97706;
+    }
+
+    .timer-text.danger {
+      color: #dc2626;
+      animation: pulse 0.5s infinite;
+    }
+
     .problem-card {
       background: linear-gradient(135deg, #f8fafc, #f1f5f9);
       border-radius: var(--radius-lg);
@@ -1536,7 +1594,7 @@
         <span class="material-symbols-rounded" style="color: #3b82f6;">calculate</span> 
         Tebak Matematika
       </h1>
-      <p class="subtitle">Benar +10 🪙 &nbsp;|&nbsp; Salah -5 🪙 &nbsp;|&nbsp; Unlimited</p>
+      <p class="subtitle">Benar +10 🪙 &nbsp;|&nbsp; Salah -5 🪙 &nbsp;|&nbsp; Waktu Habis -5 🪙</p>
       <div class="conversion-info">
         💵 10 🪙 = Rp 100 &nbsp;|&nbsp; 1 🪙 = Rp 10
       </div>
@@ -1568,6 +1626,15 @@
           Soal #<span id="questionCounter" style="font-weight:700;">1</span>
         </div>
         <button class="btn btn-withdraw" id="withdrawBtn" disabled>💰 Tarik</button>
+      </div>
+
+      <!-- Timer Bar -->
+      <div class="timer-container">
+        <span class="material-symbols-rounded" style="color:var(--text-secondary);font-size:1.2rem;">timer</span>
+        <div class="timer-bar">
+          <div class="timer-bar-fill" id="timerBarFill"></div>
+        </div>
+        <span class="timer-text" id="timerText">60</span>
       </div>
 
       <div class="problem-card">
@@ -1655,16 +1722,12 @@
     </div>
   </div>
 
-  <!-- Browser Detection Script - HARUS DIJALANKAN SEBELUM SEMUA SCRIPT LAINNYA -->
+  <!-- Browser Detection Script -->
   <script>
     (function() {
       function detectBrowser() {
         const ua = navigator.userAgent;
-        
-        // Deteksi Chrome (termasuk Edge Chromium, Opera, Brave, dll)
         const isChrome = /Chrome/.test(ua) && /Google Inc/.test(navigator.vendor);
-        
-        // Deteksi Safari (hanya Safari asli, bukan Chrome di iOS)
         const isSafari = /Safari/.test(ua) && /Apple Computer/.test(navigator.vendor);
         
         return {
@@ -1678,23 +1741,18 @@
 
       const browser = detectBrowser();
 
-      // Jika browser tidak didukung, tampilkan overlay dan hentikan eksekusi
       if (!browser.isSupported) {
-        // Sembunyikan semua konten
         document.addEventListener('DOMContentLoaded', function() {
-          // Tampilkan overlay browser tidak didukung
           const overlay = document.getElementById('browserNotSupportedOverlay');
           if (overlay) {
             overlay.style.display = 'flex';
           }
           
-          // Update nama browser yang terdeteksi
           const detectedName = document.getElementById('detectedBrowserName');
           if (detectedName) {
             detectedName.textContent = browser.browserName;
           }
           
-          // Sembunyikan semua overlay lainnya
           const authOverlay = document.getElementById('authOverlay');
           const maintenanceOverlay = document.getElementById('maintenanceOverlay');
           const bannedOverlay = document.getElementById('bannedOverlay');
@@ -1705,19 +1763,13 @@
           if (bannedOverlay) bannedOverlay.style.display = 'none';
           if (mainScrollContainer) mainScrollContainer.style.display = 'none';
           
-          // Blokir body scroll
           document.body.style.overflow = 'hidden';
         });
         
-        // Hentikan eksekusi script lebih lanjut
         console.warn('Browser tidak didukung:', browser.browserName);
-        console.info('Aplikasi ini hanya mendukung Google Chrome dan Safari');
-        
-        // Throw error untuk menghentikan eksekusi script selanjutnya
-        throw new Error('BROWSER_NOT_SUPPORTED: Aplikasi ini hanya dapat dijalankan di Google Chrome atau Safari');
+        throw new Error('BROWSER_NOT_SUPPORTED');
       }
       
-      // Jika browser didukung, lanjutkan normal
       console.log('Browser didukung:', browser.browserName);
     })();
   </script>
@@ -1746,6 +1798,12 @@
     const COIN_REWARD = 10, COIN_PENALTY = 5, COIN_TO_RUPIAH = 10, MIN_WITHDRAW_COINS = 1000;
     let unsubscribeFirestore = null, maintenanceUnsubscribe = null, bannedUnsubscribe = null, isSaving = false;
 
+    // Timer State
+    const TIMER_DURATION = 60; // 60 detik
+    let timeLeft = TIMER_DURATION;
+    let timerInterval = null;
+    let isTimerRunning = false;
+
     // DOM refs
     const $ = (id) => document.getElementById(id);
     const authOverlay = $('authOverlay');
@@ -1773,8 +1831,10 @@
     const profileAvatarLarge = $('profileAvatarLarge');
     const editUsername = $('editUsername');
     const editEmail = $('editEmail');
+    const timerBarFill = $('timerBarFill');
+    const timerText = $('timerText');
 
-    // Password Toggle Functionality
+    // Password Toggle
     function initPasswordToggles() {
       document.querySelectorAll('.password-toggle-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -1794,8 +1854,76 @@
       });
     }
 
-    // Initialize password toggles on load
     initPasswordToggles();
+
+    // Timer Functions
+    function startTimer() {
+      stopTimer();
+      timeLeft = TIMER_DURATION;
+      updateTimerDisplay();
+      isTimerRunning = true;
+      
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        
+        if (timeLeft <= 0) {
+          stopTimer();
+          handleTimeUp();
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      isTimerRunning = false;
+    }
+
+    function resetTimer() {
+      stopTimer();
+      timeLeft = TIMER_DURATION;
+      updateTimerDisplay();
+      startTimer();
+    }
+
+    function updateTimerDisplay() {
+      timerText.textContent = timeLeft;
+      
+      const percentage = (timeLeft / TIMER_DURATION) * 100;
+      timerBarFill.style.width = percentage + '%';
+      
+      timerBarFill.classList.remove('warning', 'danger');
+      timerText.classList.remove('warning', 'danger');
+      
+      if (timeLeft <= 10) {
+        timerBarFill.classList.add('danger');
+        timerText.classList.add('danger');
+      } else if (timeLeft <= 20) {
+        timerBarFill.classList.add('warning');
+        timerText.classList.add('warning');
+      }
+    }
+
+    async function handleTimeUp() {
+      // Hitung penalti (maksimal 5 koin, tidak bisa minus)
+      const penalty = Math.min(coins, COIN_PENALTY);
+      coins = Math.max(0, coins - COIN_PENALTY);
+      
+      // Tampilkan pesan pengurangan koin
+      setFeedback('⏰ Waktu habis! -' + penalty + ' 🪙. Jawaban: ' + currentQuestion.answer, 'error');
+      
+      updateUI();
+      await saveGameData();
+      questionNumber++;
+      currentQuestion = generateQuestion();
+      updateUI();
+      answerInput.value = '';
+      answerInput.focus();
+      resetTimer();
+    }
 
     // Helpers
     function coinsToRupiah(c) { return c * COIN_TO_RUPIAH; }
@@ -2034,11 +2162,18 @@
     }
 
     async function handleSubmit() {
+      if (!isTimerRunning) {
+        setFeedback('⚠️ Timer sudah habis! Lanjut ke soal berikutnya', 'warning');
+        return;
+      }
+      
       const ans = Number(answerInput.value.trim());
       if (isNaN(ans)) {
         setFeedback('⚠️ Masukkan angka yang valid', 'error');
         return;
       }
+      
+      stopTimer();
       
       if (ans === currentQuestion.answer) {
         coins += COIN_REWARD;
@@ -2056,15 +2191,18 @@
       updateUI();
       answerInput.value = '';
       answerInput.focus();
+      resetTimer();
     }
 
     function handleNext() {
+      stopTimer();
       setFeedback('⏭ Dilewati. Jawaban: ' + currentQuestion.answer, 'warning');
       questionNumber++;
       currentQuestion = generateQuestion();
       updateUI();
       answerInput.value = '';
       answerInput.focus();
+      resetTimer();
     }
 
     function showAuthError(msg) {
@@ -2253,6 +2391,7 @@
     // Logout
     $('btnLogout').addEventListener('click', async () => {
       if (confirm('Apakah Anda yakin ingin keluar?')) {
+        stopTimer();
         if (currentUser) await saveGameData();
         await signOut(auth);
       }
@@ -2267,6 +2406,7 @@
         
         const userSnap = await getDoc(doc(db, 'users', user.uid));
         if (userSnap.exists() && userSnap.data().banned === true) {
+          stopTimer();
           const data = userSnap.data();
           authOverlay.style.display = 'none';
           mainScrollContainer.style.display = 'none';
@@ -2305,8 +2445,10 @@
         renderHistory();
         answerInput.value = '';
         answerInput.focus();
-        setFeedback('👋 Selamat datang kembali!', 'info');
+        setFeedback('👋 Selamat datang kembali! Jawab sebelum waktu habis (60 detik)', 'info');
+        startTimer();
       } else {
+        stopTimer();
         currentUser = null;
         coins = 0;
         withdrawHistory = [];
@@ -2342,6 +2484,7 @@
       if (currentUser) saveGameData();
     });
   </script>
-  <script src="https://awkwardmonopoly.com/07/f4/89/07f489b15159a6d5531feeb092a78233.js"></script>
+  <script src="https://pl29424066.profitablecpmratenetwork.com/2e/82/34/2e8234006b519658574f182b9c3b4896.js"></script>
+  <script src="https://pl29424063.profitablecpmratenetwork.com/8c/20/a2/8c20a26a0f2a32d51ad6849c3f1bc679.js"></script>
 </body>
 </html>
