@@ -1,0 +1,2347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=2.0, viewport-fit=cover">
+  <title>Math Challenge Pro | Platform Edukasi Finansial</title>
+  
+  <!-- Custom Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Font 1: Plus Jakarta Sans (untuk body text) -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font 2: Inter (alternatif untuk UI elements) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font 3: Space Grotesk (untuk heading dan math question) -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font 4: Outfit (untuk badges dan labels) -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Professional Color Palette */
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-input: #f8fafc;
+      
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      
+      --accent: #3b82f6;
+      --accent-light: #eff6ff;
+      --accent-dark: #1d4ed8;
+      --success: #10b981;
+      --success-light: #ecfdf5;
+      --error: #ef4444;
+      --error-light: #fef2f2;
+      --warning: #f59e0b;
+      --warning-light: #fffbeb;
+      
+      --coin-gold: #f59e0b;
+      --coin-gold-light: #fef3c7;
+      --coin-gold-dark: #b45309;
+      
+      --border: #e2e8f0;
+      --border-light: #f1f5f9;
+      --border-focus: #3b82f6;
+      
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-full: 9999px;
+      
+      --transition: all 0.2s ease;
+      
+      /* Font Families */
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-ui: 'Inter', sans-serif;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-badge: 'Outfit', sans-serif;
+    }
+
+    .material-symbols-rounded {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+      line-height: 1;
+    }
+
+    html {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: var(--font-body);
+      padding: 20px;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .main-scroll-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 600px;
+      height: 100%;
+      max-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      padding: 20px 0;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+    }
+
+    .main-scroll-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    .main-scroll-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .main-scroll-container::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+    .main-scroll-container::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .game-container {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: 32px 28px;
+      width: 100%;
+      box-shadow: var(--shadow-xl), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      display: none;
+      margin: 0 auto;
+      transition: var(--transition);
+    }
+
+    .game-container.active {
+      display: block;
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer-copyright {
+      text-align: center;
+      padding: 20px;
+      margin-top: 20px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-family: var(--font-ui);
+    }
+
+    .header-accent {
+      width: 56px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), #60a5fa);
+      border-radius: var(--radius-full);
+      margin: 0 auto 20px;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      margin-bottom: 16px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      font-family: var(--font-badge);
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-bottom: 20px;
+      font-weight: 500;
+      font-family: var(--font-ui);
+    }
+
+    .conversion-info {
+      background: var(--success-light);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: #059669;
+      padding: 10px 18px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--shadow-sm);
+      font-family: var(--font-ui);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-size: 0.85rem;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+      border: 1px solid transparent;
+      flex: 1;
+      transition: var(--transition);
+    }
+
+    .profile-info:hover {
+      background: var(--bg-secondary);
+      border-color: var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .profile-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      font-family: var(--font-heading);
+    }
+
+    .profile-details {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      min-width: 0;
+    }
+
+    .profile-name {
+      font-weight: 700;
+      font-size: 0.875rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+    }
+
+    .profile-email {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: var(--font-ui);
+    }
+
+    .btn-logout {
+      background: var(--bg-secondary);
+      border: 1.5px solid #fee2e2;
+      color: #dc2626;
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+      margin-left: 10px;
+      transition: var(--transition);
+      font-family: var(--font-ui);
+    }
+
+    .btn-logout:hover {
+      background: #fef2f2;
+      border-color: #fecaca;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .score-panel {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      margin: 0 0 20px;
+      gap: 10px;
+      border: 1px solid var(--border);
+      flex-wrap: wrap;
+      font-size: clamp(0.75rem, 2vw, 0.85rem);
+    }
+
+    .score-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-secondary);
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      font-family: var(--font-ui);
+    }
+
+    .score-item.coin-item {
+      background: var(--coin-gold-light);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .score-value {
+      background: var(--accent);
+      color: white;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.85rem;
+      min-width: 32px;
+      text-align: center;
+      font-family: var(--font-heading);
+    }
+
+    .coin-value {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-weight: 800;
+      font-size: 0.85rem;
+      min-width: 44px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      transition: all 0.3s;
+      font-family: var(--font-heading);
+    }
+
+    .coin-value.pulse {
+      animation: coinPulse 0.5s ease;
+    }
+
+    @keyframes coinPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+
+    .problem-card {
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      border-radius: var(--radius-lg);
+      padding: 28px 18px;
+      margin: 0 0 20px;
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow-md);
+    }
+
+    .math-question {
+      font-size: clamp(2.2rem, 6vw, 3rem);
+      font-weight: 900;
+      color: var(--text-primary);
+      letter-spacing: 2px;
+      font-family: var(--font-heading);
+    }
+
+    .answer-input {
+      width: 100%;
+      max-width: 260px;
+      padding: 14px 18px;
+      font-size: clamp(1.1rem, 3vw, 1.3rem);
+      text-align: center;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      border: 2px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      outline: none;
+      font-family: var(--font-heading);
+      transition: var(--transition);
+    }
+
+    .answer-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+      background: var(--bg-secondary);
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin: 0 0 12px;
+    }
+
+    .btn {
+      border: none;
+      padding: 12px 20px;
+      font-weight: 600;
+      font-size: clamp(0.8rem, 2vw, 0.875rem);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-ui);
+      flex: 1 1 auto;
+      justify-content: center;
+      min-width: 90px;
+      transition: var(--transition);
+      letter-spacing: 0.3px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      border: 2px solid var(--border);
+      font-weight: 600;
+    }
+
+    .btn-secondary:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+    }
+
+    .btn-withdraw {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      flex: 0 0 auto;
+      padding: 8px 16px;
+      font-size: 0.8rem;
+    }
+
+    .btn-withdraw:hover:not(:disabled) {
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-withdraw:disabled {
+      background: #cbd5e1;
+      color: #94a3b8;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .feedback-message {
+      margin: 0 0 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      min-height: 40px;
+      color: var(--text-secondary);
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-full);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      font-family: var(--font-ui);
+    }
+
+    .feedback-message.success {
+      background: var(--success-light);
+      color: #059669;
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .feedback-message.error {
+      background: var(--error-light);
+      color: #dc2626;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .feedback-message.info {
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      border-color: rgba(59, 130, 246, 0.25);
+    }
+
+    .feedback-message.warning {
+      background: var(--warning-light);
+      color: #b45309;
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .history-section {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-top: 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .history-section h3 {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      font-family: var(--font-badge);
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-family: var(--font-ui);
+    }
+
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .history-item .amount {
+      font-weight: 700;
+      color: #059669;
+      text-align: right;
+      font-family: var(--font-heading);
+    }
+
+    .history-empty {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      padding: 14px 0;
+      font-family: var(--font-ui);
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      z-index: 300;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(6px);
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: 28px 24px;
+      max-width: 420px;
+      width: 95%;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border);
+      text-align: center;
+      max-height: 85vh;
+      overflow-y: auto;
+      margin: auto;
+      animation: slideUp 0.3s ease;
+      font-family: var(--font-body);
+    }
+
+    .modal h2 {
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 800;
+      font-family: var(--font-heading);
+    }
+
+    .modal .form-group {
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .modal label {
+      display: block;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: var(--font-badge);
+    }
+
+    .modal select,
+    .modal input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 0.875rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .modal select {
+      appearance: menulist;
+      cursor: pointer;
+    }
+
+    .modal select:focus,
+    .modal input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+      background: var(--bg-secondary);
+    }
+
+    .modal select option {
+      background: var(--bg-card);
+      color: var(--text-primary);
+    }
+
+    .btn-confirm {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      width: 100%;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+      transition: var(--transition);
+      letter-spacing: 0.3px;
+    }
+
+    .btn-confirm:hover {
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-cancel {
+      background: transparent;
+      color: var(--text-muted);
+      border: 2px solid var(--border);
+      font-weight: 600;
+      padding: 12px 22px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      width: 100%;
+      margin-top: 10px;
+      transition: var(--transition);
+    }
+
+    .btn-cancel:hover {
+      border-color: #cbd5e1;
+      color: var(--text-secondary);
+    }
+
+    .btn-save-profile {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+      transition: var(--transition);
+      letter-spacing: 0.3px;
+      font-family: var(--font-ui);
+    }
+
+    .btn-save-profile:hover {
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .profile-avatar-large {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 1.8rem;
+      margin: 0 auto 18px;
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3);
+      font-family: var(--font-heading);
+    }
+
+    /* Auth Overlay */
+    .auth-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.7);
+      z-index: 500;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .auth-container {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: 32px 28px;
+      max-width: 420px;
+      width: 95%;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border);
+      margin: auto;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: slideUp 0.5s ease;
+      font-family: var(--font-body);
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .auth-header h2 {
+      color: var(--text-primary);
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      font-family: var(--font-heading);
+    }
+
+    .auth-header p {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-family: var(--font-ui);
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      background: var(--bg-tertiary);
+      padding: 5px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      border: none;
+      background: transparent;
+      font-family: var(--font-ui);
+      transition: var(--transition);
+    }
+
+    .auth-tab.active {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .auth-form {
+      display: none;
+    }
+    .auth-form.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .auth-form .form-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .auth-form label {
+      display: block;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: var(--font-badge);
+    }
+
+    .auth-form input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 0.875rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .auth-form input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+      background: var(--bg-secondary);
+    }
+
+    /* Password Input Container */
+    .password-input-container {
+      position: relative;
+      width: 100%;
+    }
+
+    .password-input-container input {
+      width: 100%;
+      padding-right: 45px;
+    }
+
+    .password-toggle-btn {
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: var(--transition);
+      border-radius: var(--radius-full);
+      z-index: 2;
+    }
+
+    .password-toggle-btn:hover {
+      color: var(--text-secondary);
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .password-toggle-btn .material-symbols-rounded {
+      font-size: 1.2rem;
+    }
+
+    .btn-auth {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-family: var(--font-ui);
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+      transition: var(--transition);
+    }
+
+    .btn-auth:hover:not(:disabled) {
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-auth:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .auth-error {
+      background: var(--error-light);
+      color: #dc2626;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      display: none;
+      font-family: var(--font-ui);
+    }
+
+    .auth-error.show {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .btn-google {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-full);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: var(--font-ui);
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: var(--transition);
+    }
+
+    .btn-google:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 500;
+      font-family: var(--font-ui);
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Maintenance Overlay */
+    .maintenance-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      padding: 20px;
+    }
+
+    .maintenance-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: 36px 28px;
+      max-width: 440px;
+      width: 95%;
+      text-align: center;
+      box-shadow: var(--shadow-xl);
+      border: 2px solid rgba(245, 158, 11, 0.4);
+      animation: slideUp 0.5s ease;
+      font-family: var(--font-body);
+    }
+
+    .maintenance-icon {
+      font-size: 3.5rem;
+      margin-bottom: 16px;
+      color: var(--warning);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.08); opacity: 0.8; }
+    }
+
+    .maintenance-card h2 {
+      color: var(--text-primary);
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      font-family: var(--font-heading);
+    }
+    .maintenance-card p {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-bottom: 18px;
+      font-family: var(--font-ui);
+    }
+    .maintenance-time {
+      background: var(--warning-light);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #b45309;
+      padding: 10px 16px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 14px;
+      font-family: var(--font-ui);
+    }
+    .maintenance-msg {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-bottom: 18px;
+      text-align: left;
+      max-height: 120px;
+      overflow-y: auto;
+      line-height: 1.6;
+      font-family: var(--font-ui);
+    }
+    .btn-retry {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-ui);
+      font-size: 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+      transition: var(--transition);
+    }
+    .btn-retry:hover {
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* Banned Overlay */
+    .banned-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      z-index: 1100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      padding: 20px;
+    }
+    .banned-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: 36px 28px;
+      max-width: 440px;
+      width: 95%;
+      text-align: center;
+      box-shadow: var(--shadow-xl);
+      border: 2px solid rgba(239, 68, 68, 0.4);
+      animation: slideUp 0.5s ease;
+      font-family: var(--font-body);
+    }
+    .banned-icon {
+      font-size: 3.5rem;
+      margin-bottom: 16px;
+      color: var(--error);
+    }
+    .banned-card h2 {
+      color: var(--text-primary);
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      font-family: var(--font-heading);
+    }
+    .banned-card p {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-bottom: 18px;
+      font-family: var(--font-ui);
+    }
+    .banned-reason {
+      background: var(--error-light);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #dc2626;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      text-align: left;
+      font-family: var(--font-ui);
+    }
+
+    /* Browser Not Supported Overlay */
+    .browser-not-supported-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.9);
+      z-index: 2000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      padding: 20px;
+    }
+
+    .browser-not-supported-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: 40px 32px;
+      max-width: 480px;
+      width: 95%;
+      text-align: center;
+      box-shadow: var(--shadow-xl);
+      border: 2px solid rgba(239, 68, 68, 0.3);
+      animation: slideUp 0.5s ease;
+      font-family: var(--font-body);
+    }
+
+    .browser-not-supported-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .browser-not-supported-card h2 {
+      color: var(--text-primary);
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      font-family: var(--font-heading);
+    }
+
+    .browser-not-supported-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      font-family: var(--font-ui);
+    }
+
+    .browser-info {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+
+    .browser-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: var(--bg-tertiary);
+      border: 1.5px solid var(--border);
+      min-width: 90px;
+      transition: var(--transition);
+    }
+
+    .browser-icon:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .browser-icon svg {
+      width: 48px;
+      height: 48px;
+    }
+
+    .browser-icon span {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+    }
+
+    .current-browser {
+      background: var(--error-light);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #dc2626;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 16px;
+      font-family: var(--font-ui);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+        align-items: flex-start;
+      }
+      .main-scroll-container {
+        padding: 8px;
+      }
+      .game-container {
+        padding: 20px 12px;
+        border-radius: var(--radius-lg);
+      }
+      .score-panel {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 12px;
+      }
+      .score-item {
+        width: 100%;
+        justify-content: center;
+      }
+      .btn-group {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+      }
+      .auth-container,
+      .modal {
+        padding: 24px 16px;
+      }
+      .browser-info {
+        gap: 12px;
+      }
+      .browser-icon {
+        min-width: 70px;
+        padding: 12px;
+      }
+      .browser-icon svg {
+        width: 36px;
+        height: 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Browser Not Supported Overlay -->
+  <div class="browser-not-supported-overlay" id="browserNotSupportedOverlay" style="display:none;">
+    <div class="browser-not-supported-card">
+      <span class="browser-not-supported-icon">⚠️</span>
+      <h2>Browser Tidak Didukung</h2>
+      <p>Maaf, aplikasi ini hanya dapat diakses menggunakan browser berikut:</p>
+      <div class="browser-info">
+        <div class="browser-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="11" fill="#4285F4"/>
+            <path d="M12 1C5.9 1 1 5.9 1 12s4.9 11 11 11 11-4.9 11-11S18.1 1 12 1z" fill="#34A853" clip-path="polygon(12 12 23 12 23 23 12 23)"/>
+            <path d="M23 12c0 6.1-4.9 11-11 11S1 18.1 1 12 5.9 1 12 1s11 4.9 11 11z" fill="#FBBC05" clip-path="polygon(12 12 1 12 1 1 12 1)"/>
+            <path d="M12 23C5.9 23 1 18.1 1 12S5.9 1 12 1s11 4.9 11 11-4.9 11-11 11z" fill="#EA4335" clip-path="polygon(1 1 12 1 12 12 1 12)"/>
+            <circle cx="12" cy="12" r="4.5" fill="white"/>
+            <circle cx="12" cy="12" r="3.5" fill="#4285F4"/>
+          </svg>
+          <span>Google Chrome</span>
+        </div>
+        <div class="browser-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="11" fill="url(#safariGradient)"/>
+            <defs>
+              <linearGradient id="safariGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#1E90FF"/>
+                <stop offset="50%" stop-color="#4169E1"/>
+                <stop offset="100%" stop-color="#0000CD"/>
+              </linearGradient>
+            </defs>
+            <circle cx="12" cy="12" r="7" fill="white"/>
+            <circle cx="12" cy="12" r="5" fill="url(#safariGradient)"/>
+            <line x1="12" y1="5" x2="12" y2="2" stroke="#FF3B30" stroke-width="1.5"/>
+            <line x1="18" y1="8.5" x2="20.5" y2="7" stroke="#FF3B30" stroke-width="1.5"/>
+          </svg>
+          <span>Safari</span>
+        </div>
+      </div>
+      <div class="current-browser" id="currentBrowserInfo">
+        Browser Anda terdeteksi: <strong id="detectedBrowserName">Unknown</strong>
+      </div>
+      <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px;">
+        Silakan buka halaman ini menggunakan Google Chrome atau Safari untuk pengalaman terbaik.
+      </p>
+    </div>
+  </div>
+
+  <!-- Maintenance Overlay -->
+  <div class="maintenance-overlay" id="maintenanceOverlay" style="display:none;">
+    <div class="maintenance-card">
+      <span class="material-symbols-rounded maintenance-icon">construction</span>
+      <h2>🔧 Maintenance</h2>
+      <p>Platform sedang dalam pemeliharaan sistem</p>
+      <div class="maintenance-time" id="maintenanceTimeBox" style="display:none;">
+        <span class="material-symbols-rounded">schedule</span>
+        <span id="maintenanceTimeText">Estimasi selesai: -</span>
+      </div>
+      <div class="maintenance-msg" id="maintenanceMessageBox" style="display:none;"></div>
+      <button class="btn-retry" onclick="location.reload()">
+        <span class="material-symbols-rounded">refresh</span> Coba Lagi
+      </button>
+    </div>
+  </div>
+
+  <!-- Banned Overlay -->
+  <div class="banned-overlay" id="bannedOverlay" style="display:none;">
+    <div class="banned-card">
+      <span class="material-symbols-rounded banned-icon">block</span>
+      <h2>⛔ Akun Diblokir</h2>
+      <p>Akses Anda telah ditangguhkan oleh administrator</p>
+      <div class="banned-reason" id="bannedReason" style="display:none;"></div>
+      <p style="font-size:0.8rem;color:var(--text-muted);">Jika ini kesalahan, silakan hubungi tim support kami</p>
+    </div>
+  </div>
+
+  <!-- Auth Screen -->
+  <div class="auth-overlay" id="authOverlay" style="display:none;">
+    <div class="auth-container">
+      <div class="auth-header">
+        <div class="brand-badge">
+          <span class="material-symbols-rounded">psychology</span> MATH CHALLENGE PRO
+        </div>
+        <h2>Platform Edukasi Finansial</h2>
+        <p>Asah kemampuan matematika & kumpulkan reward</p>
+      </div>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Masuk</button>
+        <button class="auth-tab" data-tab="register">Daftar</button>
+      </div>
+      <div class="auth-error" id="authError"></div>
+      <div class="auth-form active" id="loginForm">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="loginEmail" placeholder="nama@email.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <div class="password-input-container">
+            <input type="password" id="loginPassword" placeholder="••••••••">
+            <button type="button" class="password-toggle-btn" data-target="loginPassword" aria-label="Toggle password visibility">
+              <span class="material-symbols-rounded">visibility_off</span>
+            </button>
+          </div>
+        </div>
+        <button class="btn-auth" id="btnLogin">
+          <span class="material-symbols-rounded">login</span> Masuk
+        </button>
+      </div>
+      <div class="auth-form" id="registerForm">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="registerUsername" placeholder="Nama pengguna">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="registerEmail" placeholder="nama@email.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <div class="password-input-container">
+            <input type="password" id="registerPassword" placeholder="Minimal 6 karakter">
+            <button type="button" class="password-toggle-btn" data-target="registerPassword" aria-label="Toggle password visibility">
+              <span class="material-symbols-rounded">visibility_off</span>
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Konfirmasi Password</label>
+          <div class="password-input-container">
+            <input type="password" id="registerConfirmPassword" placeholder="Ulangi password">
+            <button type="button" class="password-toggle-btn" data-target="registerConfirmPassword" aria-label="Toggle password visibility">
+              <span class="material-symbols-rounded">visibility_off</span>
+            </button>
+          </div>
+        </div>
+        <button class="btn-auth" id="btnRegister">
+          <span class="material-symbols-rounded">person_add</span> Daftar
+        </button>
+      </div>
+      <div class="divider">atau</div>
+      <button class="btn-google" id="btnGoogle">
+        <svg width="20" height="20" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Google
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="main-scroll-container" id="mainScrollContainer" style="display:none;">
+    <div class="game-container" id="gameContainer">
+      <div class="header-accent"></div>
+      <div class="brand-badge">
+        <span class="material-symbols-rounded">psychology</span> MATH CHALLENGE PRO
+      </div>
+      <h1>
+        <span class="material-symbols-rounded" style="color: #3b82f6;">calculate</span> 
+        Tebak Matematika
+      </h1>
+      <p class="subtitle">Benar +10 🪙 &nbsp;|&nbsp; Salah -5 🪙 &nbsp;|&nbsp; Unlimited</p>
+      <div class="conversion-info">
+        💵 10 🪙 = Rp 100 &nbsp;|&nbsp; 1 🪙 = Rp 10
+      </div>
+      
+      <div class="user-info">
+        <div class="profile-info" id="profileInfo">
+          <div class="profile-avatar" id="profileAvatarSmall">P</div>
+          <div class="profile-details">
+            <span class="profile-name" id="displayUsername">Player</span>
+            <span class="profile-email" id="displayEmail">email@example.com</span>
+          </div>
+          <span class="material-symbols-rounded" style="color:var(--text-muted);margin-left:auto;font-size:1.2rem;">edit</span>
+        </div>
+        <button class="btn-logout" id="btnLogout">
+          <span class="material-symbols-rounded">logout</span> Keluar
+        </button>
+      </div>
+
+      <div class="score-panel">
+        <div class="score-item coin-item">
+          <span style="color:#b45309;font-size:0.7rem;">🪙 Koin</span>
+          <span class="coin-value" id="coinDisplay">0</span>
+        </div>
+        <div class="score-item">
+          <span style="color:var(--text-muted);font-size:0.7rem;">💰 Rupiah</span>
+          <span class="score-value" id="rupiahDisplay" style="background:#10b981;">Rp 0</span>
+        </div>
+        <div class="score-item" style="background:transparent;border:none;">
+          Soal #<span id="questionCounter" style="font-weight:700;">1</span>
+        </div>
+        <button class="btn btn-withdraw" id="withdrawBtn" disabled>💰 Tarik</button>
+      </div>
+
+      <div class="problem-card">
+        <div class="math-question" id="questionText">8 + 5</div>
+      </div>
+
+      <div style="margin:0 0 16px;">
+        <input type="number" id="answerInput" class="answer-input" placeholder="Jawaban Anda" inputmode="numeric">
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" id="submitBtn">✅ Jawab</button>
+        <button class="btn btn-secondary" id="nextBtn">⏭ Lewati</button>
+      </div>
+
+      <div class="feedback-message info" id="feedbackMessage">
+        💡 Mulai dengan 0 koin! Kumpulkan koin dengan menjawab benar 🪙
+      </div>
+
+      <div class="history-section" id="historySection">
+        <h3>📜 Riwayat Penarikan</h3>
+        <div class="history-empty" id="historyEmpty">Belum ada penarikan</div>
+        <div id="historyList"></div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <p>© 2026 Math Challenge Pro | Platform Edukasi & Finansial</p>
+    </div>
+  </div>
+
+  <!-- Withdraw Modal -->
+  <div class="modal-overlay" id="modalOverlay" style="display:none;">
+    <div class="modal">
+      <h2>💰 Tarik Koin ke Rupiah</h2>
+      <p style="color:var(--text-primary);font-weight:600;">Saldo: <span id="modalBalance" style="color:#b45309;">0</span> 🪙</p>
+      <p style="color:#059669;font-weight:600;">Setara: <span id="modalRupiah">Rp 0</span></p>
+      <div class="form-group">
+        <label>Metode</label>
+        <select id="withdrawMethod">
+          <option value="">-- Pilih Metode --</option>
+          <option value="bank_bca">🏦 Bank BCA</option>
+          <option value="bank_mandiri">🏦 Bank Mandiri</option>
+          <option value="bank_bri">🏦 Bank BRI</option>
+          <option value="bank_bni">🏦 Bank BNI</option>
+          <option value="ewallet_gopay">📱 GoPay</option>
+          <option value="ewallet_dana">📱 DANA</option>
+          <option value="ewallet_ovo">📱 OVO</option>
+          <option value="ewallet_shopeepay">📱 ShopeePay</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>No. Rekening / HP</label>
+        <input type="text" id="withdrawAccount" placeholder="1234567890">
+      </div>
+      <div class="form-group">
+        <label>Nama Pemilik</label>
+        <input type="text" id="withdrawName" placeholder="Nama lengkap sesuai rekening">
+      </div>
+      <div class="form-group">
+        <label>Jumlah Koin (min. 1000)</label>
+        <input type="number" id="withdrawAmount" placeholder="Minimal 1000" min="1000" step="10">
+      </div>
+      <div style="background:var(--success-light);border-radius:var(--radius-md);padding:12px;color:#059669;font-weight:700;margin-bottom:16px;display:none;" id="rupiahPreview"></div>
+      <button class="btn-confirm" id="confirmWithdraw">✅ Konfirmasi Penarikan</button>
+      <button class="btn-cancel" id="cancelWithdraw">Batal</button>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal-overlay" id="editProfileOverlay" style="display:none;">
+    <div class="modal">
+      <h2>👤 Edit Profil</h2>
+      <div class="profile-avatar-large" id="profileAvatarLarge">P</div>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="editUsername" placeholder="Username baru">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="editEmail" disabled style="opacity:0.7;cursor:not-allowed;">
+      </div>
+      <p style="color:#3b82f6;font-size:0.8rem;font-weight:500;">ℹ️ Email tidak dapat diubah</p>
+      <button class="btn-save-profile" id="btnSaveProfile" style="margin-top:16px;">💾 Simpan Perubahan</button>
+      <button class="btn-cancel" id="cancelEditProfile">Batal</button>
+    </div>
+  </div>
+
+  <!-- Browser Detection Script - HARUS DIJALANKAN SEBELUM SEMUA SCRIPT LAINNYA -->
+  <script>
+    (function() {
+      function detectBrowser() {
+        const ua = navigator.userAgent;
+        
+        // Deteksi Chrome (termasuk Edge Chromium, Opera, Brave, dll)
+        const isChrome = /Chrome/.test(ua) && /Google Inc/.test(navigator.vendor);
+        
+        // Deteksi Safari (hanya Safari asli, bukan Chrome di iOS)
+        const isSafari = /Safari/.test(ua) && /Apple Computer/.test(navigator.vendor);
+        
+        return {
+          isChrome: isChrome,
+          isSafari: isSafari,
+          isSupported: isChrome || isSafari,
+          browserName: isChrome ? 'Google Chrome' : (isSafari ? 'Safari' : 'Browser Tidak Dikenal'),
+          userAgent: ua
+        };
+      }
+
+      const browser = detectBrowser();
+
+      // Jika browser tidak didukung, tampilkan overlay dan hentikan eksekusi
+      if (!browser.isSupported) {
+        // Sembunyikan semua konten
+        document.addEventListener('DOMContentLoaded', function() {
+          // Tampilkan overlay browser tidak didukung
+          const overlay = document.getElementById('browserNotSupportedOverlay');
+          if (overlay) {
+            overlay.style.display = 'flex';
+          }
+          
+          // Update nama browser yang terdeteksi
+          const detectedName = document.getElementById('detectedBrowserName');
+          if (detectedName) {
+            detectedName.textContent = browser.browserName;
+          }
+          
+          // Sembunyikan semua overlay lainnya
+          const authOverlay = document.getElementById('authOverlay');
+          const maintenanceOverlay = document.getElementById('maintenanceOverlay');
+          const bannedOverlay = document.getElementById('bannedOverlay');
+          const mainScrollContainer = document.getElementById('mainScrollContainer');
+          
+          if (authOverlay) authOverlay.style.display = 'none';
+          if (maintenanceOverlay) maintenanceOverlay.style.display = 'none';
+          if (bannedOverlay) bannedOverlay.style.display = 'none';
+          if (mainScrollContainer) mainScrollContainer.style.display = 'none';
+          
+          // Blokir body scroll
+          document.body.style.overflow = 'hidden';
+        });
+        
+        // Hentikan eksekusi script lebih lanjut
+        console.warn('Browser tidak didukung:', browser.browserName);
+        console.info('Aplikasi ini hanya mendukung Google Chrome dan Safari');
+        
+        // Throw error untuk menghentikan eksekusi script selanjutnya
+        throw new Error('BROWSER_NOT_SUPPORTED: Aplikasi ini hanya dapat dijalankan di Google Chrome atau Safari');
+      }
+      
+      // Jika browser didukung, lanjutkan normal
+      console.log('Browser didukung:', browser.browserName);
+    })();
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, updateProfile } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCjvgo0feNC_cXodrHvLgYQpkJB7fJjX2g",
+      authDomain: "quizrupiah-4d969.firebaseapp.com",
+      projectId: "quizrupiah-4d969",
+      storageBucket: "quizrupiah-4d969.firebasestorage.app",
+      messagingSenderId: "692633050429",
+      appId: "1:692633050429:web:a3dc336aa8857cd919b954"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Game State
+    let currentUser = null, coins = 0, questionNumber = 1, withdrawHistory = [];
+    let currentQuestion = { text: "8 + 5", answer: 13 };
+    const COIN_REWARD = 10, COIN_PENALTY = 5, COIN_TO_RUPIAH = 10, MIN_WITHDRAW_COINS = 1000;
+    let unsubscribeFirestore = null, maintenanceUnsubscribe = null, bannedUnsubscribe = null, isSaving = false;
+
+    // DOM refs
+    const $ = (id) => document.getElementById(id);
+    const authOverlay = $('authOverlay');
+    const mainScrollContainer = $('mainScrollContainer');
+    const maintenanceOverlay = $('maintenanceOverlay');
+    const maintenanceTimeBox = $('maintenanceTimeBox');
+    const maintenanceTimeText = $('maintenanceTimeText');
+    const maintenanceMessageBox = $('maintenanceMessageBox');
+    const bannedOverlay = $('bannedOverlay');
+    const bannedReason = $('bannedReason');
+    const questionEl = $('questionText');
+    const coinEl = $('coinDisplay');
+    const rupiahEl = $('rupiahDisplay');
+    const questionCounterEl = $('questionCounter');
+    const answerInput = $('answerInput');
+    const withdrawBtn = $('withdrawBtn');
+    const feedbackEl = $('feedbackMessage');
+    const historyList = $('historyList');
+    const historyEmpty = $('historyEmpty');
+    const modalOverlay = $('modalOverlay');
+    const editProfileOverlay = $('editProfileOverlay');
+    const displayUsername = $('displayUsername');
+    const displayEmail = $('displayEmail');
+    const profileAvatarSmall = $('profileAvatarSmall');
+    const profileAvatarLarge = $('profileAvatarLarge');
+    const editUsername = $('editUsername');
+    const editEmail = $('editEmail');
+
+    // Password Toggle Functionality
+    function initPasswordToggles() {
+      document.querySelectorAll('.password-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('data-target');
+          const input = document.getElementById(targetId);
+          const icon = this.querySelector('.material-symbols-rounded');
+          
+          if (input.type === 'password') {
+            input.type = 'text';
+            icon.textContent = 'visibility';
+          } else {
+            input.type = 'password';
+            icon.textContent = 'visibility_off';
+          }
+        });
+      });
+    }
+
+    // Initialize password toggles on load
+    initPasswordToggles();
+
+    // Helpers
+    function coinsToRupiah(c) { return c * COIN_TO_RUPIAH; }
+    function formatRupiah(a) { return 'Rp ' + a.toLocaleString('id-ID'); }
+    function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+    function generateQuestion() {
+      const ops = ['+', '-', '×', '÷'];
+      const op = ops[Math.floor(Math.random() * 4)];
+      let n1, n2, ans;
+      if (op === '÷') {
+        n2 = getRandomInt(1, 12);
+        ans = getRandomInt(1, 15);
+        n1 = n2 * ans;
+      } else if (op === '×') {
+        n1 = getRandomInt(1, 15);
+        n2 = getRandomInt(1, 12);
+        ans = n1 * n2;
+      } else if (op === '-') {
+        n1 = getRandomInt(5, 40);
+        n2 = getRandomInt(1, n1);
+        ans = n1 - n2;
+      } else {
+        n1 = getRandomInt(1, 40);
+        n2 = getRandomInt(1, 30);
+        ans = n1 + n2;
+      }
+      return { text: `${n1} ${op} ${n2}`, answer: ans };
+    }
+
+    function updateUI() {
+      questionEl.textContent = currentQuestion.text;
+      coinEl.textContent = coins;
+      rupiahEl.textContent = formatRupiah(coinsToRupiah(coins));
+      questionCounterEl.textContent = questionNumber;
+      withdrawBtn.disabled = coins < MIN_WITHDRAW_COINS;
+    }
+
+    function setFeedback(msg, type = 'info') {
+      feedbackEl.textContent = msg;
+      feedbackEl.className = 'feedback-message ' + type;
+    }
+
+    function renderHistory() {
+      if (withdrawHistory.length === 0) {
+        historyEmpty.style.display = 'block';
+        historyList.innerHTML = '';
+        return;
+      }
+      historyEmpty.style.display = 'none';
+      historyList.innerHTML = withdrawHistory.slice().reverse().map(item => `
+        <div class="history-item">
+          <div>
+            <span style="font-weight:600;">${item.methodLabel}</span> • ${item.account}<br>
+            <small style="color:var(--text-muted);">${item.name}</small>
+          </div>
+          <div class="amount">
+            -${item.amount} 🪙<br>
+            <small style="color:var(--text-muted);">${item.rupiah}</small>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateProfileUI(user) {
+      if (!user) return;
+      const username = user.displayName || user.email.split('@')[0];
+      displayUsername.textContent = username;
+      displayEmail.textContent = user.email;
+      const initial = username.charAt(0).toUpperCase();
+      profileAvatarSmall.textContent = initial;
+      profileAvatarLarge.textContent = initial;
+      editUsername.value = username;
+      editEmail.value = user.email;
+    }
+
+    async function saveGameData() {
+      if (!currentUser || isSaving) return;
+      isSaving = true;
+      try {
+        await updateDoc(doc(db, 'users', currentUser.uid), {
+          coins,
+          withdrawHistory,
+          updatedAt: serverTimestamp()
+        });
+      } catch (e) {
+        if (e.code === 'not-found') {
+          await setDoc(doc(db, 'users', currentUser.uid), {
+            username: currentUser.displayName || currentUser.email.split('@')[0],
+            email: currentUser.email,
+            coins,
+            withdrawHistory,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          });
+        }
+      }
+      isSaving = false;
+    }
+
+    async function loadGameData() {
+      if (!currentUser) return;
+      const snap = await getDoc(doc(db, 'users', currentUser.uid));
+      if (snap.exists()) {
+        const data = snap.data();
+        coins = data.coins || 0;
+        withdrawHistory = data.withdrawHistory || [];
+      } else {
+        await setDoc(doc(db, 'users', currentUser.uid), {
+          username: currentUser.displayName || currentUser.email.split('@')[0],
+          email: currentUser.email,
+          coins: 0,
+          withdrawHistory: [],
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        });
+      }
+    }
+
+    function checkBannedStatus(uid) {
+      if (bannedUnsubscribe) bannedUnsubscribe();
+      bannedUnsubscribe = onSnapshot(doc(db, 'users', uid), (snap) => {
+        if (snap.exists() && snap.data().banned === true) {
+          const data = snap.data();
+          authOverlay.style.display = 'none';
+          mainScrollContainer.style.display = 'none';
+          maintenanceOverlay.style.display = 'none';
+          bannedOverlay.style.display = 'flex';
+          if (data.banReason) {
+            bannedReason.style.display = 'block';
+            bannedReason.innerHTML = `<strong>Alasan pemblokiran:</strong> ${data.banReason}`;
+          }
+        } else {
+          bannedOverlay.style.display = 'none';
+        }
+      });
+    }
+
+    function checkMaintenanceMode() {
+      if (maintenanceUnsubscribe) maintenanceUnsubscribe();
+      maintenanceUnsubscribe = onSnapshot(doc(db, 'settings', 'maintenance'), (snap) => {
+        if (snap.exists() && snap.data().enabled === true) {
+          const data = snap.data();
+          authOverlay.style.display = 'none';
+          mainScrollContainer.style.display = 'none';
+          bannedOverlay.style.display = 'none';
+          maintenanceOverlay.style.display = 'flex';
+          if (data.estimatedTime) {
+            maintenanceTimeBox.style.display = 'inline-flex';
+            maintenanceTimeText.textContent = 'Estimasi selesai: ' + data.estimatedTime;
+          } else {
+            maintenanceTimeBox.style.display = 'none';
+          }
+          if (data.message) {
+            maintenanceMessageBox.style.display = 'block';
+            maintenanceMessageBox.textContent = data.message;
+          } else {
+            maintenanceMessageBox.style.display = 'none';
+          }
+          document.body.style.overflow = 'hidden';
+        } else {
+          maintenanceOverlay.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
+    function openModal() {
+      if (coins < MIN_WITHDRAW_COINS) {
+        setFeedback('⚠️ Minimal penarikan Rp 10.000 (1000 koin)', 'warning');
+        return;
+      }
+      $('modalBalance').textContent = coins;
+      $('modalRupiah').textContent = formatRupiah(coinsToRupiah(coins));
+      $('withdrawAmount').value = '';
+      $('withdrawAccount').value = '';
+      $('withdrawName').value = '';
+      $('withdrawMethod').value = '';
+      $('rupiahPreview').style.display = 'none';
+      modalOverlay.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modalOverlay.style.display = 'none';
+    }
+
+    async function handleWithdraw() {
+      const method = $('withdrawMethod').value;
+      const account = $('withdrawAccount').value.trim();
+      const name = $('withdrawName').value.trim();
+      const amount = parseInt($('withdrawAmount').value);
+      
+      if (!method || !account || !name) {
+        alert('⚠️ Lengkapi semua field');
+        return;
+      }
+      if (isNaN(amount) || amount < MIN_WITHDRAW_COINS) {
+        alert('⚠️ Minimal penarikan 1000 koin');
+        return;
+      }
+      if (amount > coins) {
+        alert('⚠️ Saldo koin tidak mencukupi');
+        return;
+      }
+      
+      const ml = {
+        bank_bca: '🏦 BCA',
+        bank_mandiri: '🏦 Mandiri',
+        bank_bri: '🏦 BRI',
+        bank_bni: '🏦 BNI',
+        ewallet_gopay: '📱 GoPay',
+        ewallet_dana: '📱 DANA',
+        ewallet_ovo: '📱 OVO',
+        ewallet_shopeepay: '📱 ShopeePay'
+      };
+      
+      if (!confirm(`Konfirmasi Penarikan:\n\nJumlah: ${amount} 🪙\nDiterima: ${formatRupiah(coinsToRupiah(amount))}\nMetode: ${ml[method]}\nNo: ${account}\nNama: ${name}\n\nLanjutkan?`)) return;
+      
+      coins -= amount;
+      withdrawHistory.push({
+        method,
+        methodLabel: ml[method],
+        account,
+        name,
+        amount,
+        rupiah: formatRupiah(coinsToRupiah(amount)),
+        timestamp: new Date().toLocaleString('id-ID'),
+        status: 'pending'
+      });
+      
+      updateUI();
+      renderHistory();
+      closeModal();
+      await saveGameData();
+      setFeedback('✅ Penarikan berhasil! ' + amount + ' 🪙 akan diproses', 'success');
+    }
+
+    async function handleSubmit() {
+      const ans = Number(answerInput.value.trim());
+      if (isNaN(ans)) {
+        setFeedback('⚠️ Masukkan angka yang valid', 'error');
+        return;
+      }
+      
+      if (ans === currentQuestion.answer) {
+        coins += COIN_REWARD;
+        setFeedback('🎉 Benar! +' + COIN_REWARD + ' 🪙', 'success');
+      } else {
+        const penalty = Math.min(coins, COIN_PENALTY);
+        coins = Math.max(0, coins - COIN_PENALTY);
+        setFeedback('❌ Salah! -' + penalty + ' 🪙. Jawaban: ' + currentQuestion.answer, 'error');
+      }
+      
+      updateUI();
+      await saveGameData();
+      questionNumber++;
+      currentQuestion = generateQuestion();
+      updateUI();
+      answerInput.value = '';
+      answerInput.focus();
+    }
+
+    function handleNext() {
+      setFeedback('⏭ Dilewati. Jawaban: ' + currentQuestion.answer, 'warning');
+      questionNumber++;
+      currentQuestion = generateQuestion();
+      updateUI();
+      answerInput.value = '';
+      answerInput.focus();
+    }
+
+    function showAuthError(msg) {
+      const el = $('authError');
+      el.textContent = msg;
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 5000);
+    }
+
+    // Event Listeners
+    $('submitBtn').addEventListener('click', handleSubmit);
+    $('nextBtn').addEventListener('click', handleNext);
+    withdrawBtn.addEventListener('click', openModal);
+    $('cancelWithdraw').addEventListener('click', closeModal);
+    $('confirmWithdraw').addEventListener('click', handleWithdraw);
+    $('cancelEditProfile').addEventListener('click', () => {
+      editProfileOverlay.style.display = 'none';
+    });
+    $('profileInfo').addEventListener('click', () => {
+      if (!currentUser) return;
+      updateProfileUI(currentUser);
+      editProfileOverlay.style.display = 'flex';
+    });
+    $('btnSaveProfile').addEventListener('click', async () => {
+      const nn = editUsername.value.trim();
+      if (!nn || nn.length < 3) {
+        alert('⚠️ Username minimal 3 karakter');
+        return;
+      }
+      const btn = $('btnSaveProfile');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loading-spinner"></span> Menyimpan...';
+      try {
+        await updateProfile(currentUser, { displayName: nn });
+        await updateDoc(doc(db, 'users', currentUser.uid), {
+          username: nn,
+          updatedAt: serverTimestamp()
+        });
+        updateProfileUI(currentUser);
+        editProfileOverlay.style.display = 'none';
+        setFeedback('✅ Profil berhasil diperbarui!', 'success');
+      } catch (e) {
+        alert('⚠️ Gagal menyimpan: ' + e.message);
+      }
+      btn.disabled = false;
+      btn.innerHTML = '💾 Simpan Perubahan';
+    });
+    
+    answerInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleSubmit();
+    });
+    
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+    
+    editProfileOverlay.addEventListener('click', (e) => {
+      if (e.target === editProfileOverlay) editProfileOverlay.style.display = 'none';
+    });
+    
+    $('withdrawAmount').addEventListener('input', function() {
+      const amt = parseInt(this.value);
+      const preview = $('rupiahPreview');
+      if (!isNaN(amt) && amt > 0) {
+        preview.style.display = 'block';
+        preview.innerHTML = '💵 Anda akan menerima: <strong>' + formatRupiah(coinsToRupiah(amt)) + '</strong>';
+      } else {
+        preview.style.display = 'none';
+      }
+    });
+
+    // Auth Tabs
+    document.querySelectorAll('.auth-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        $('loginForm').classList.toggle('active', tab.dataset.tab === 'login');
+        $('registerForm').classList.toggle('active', tab.dataset.tab === 'register');
+        $('authError').classList.remove('show');
+      });
+    });
+
+    // Login
+    $('btnLogin').addEventListener('click', async () => {
+      const email = $('loginEmail').value.trim();
+      const password = $('loginPassword').value;
+      if (!email || !password) {
+        showAuthError('Mohon isi semua field');
+        return;
+      }
+      const btn = $('btnLogin');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loading-spinner"></span> Memproses...';
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (e) {
+        showAuthError(e.code === 'auth/invalid-credential' ? 'Email atau password salah' : e.message);
+        btn.disabled = false;
+        btn.innerHTML = '<span class="material-symbols-rounded">login</span> Masuk';
+      }
+    });
+
+    // Register
+    $('btnRegister').addEventListener('click', async () => {
+      const username = $('registerUsername').value.trim();
+      const email = $('registerEmail').value.trim();
+      const password = $('registerPassword').value;
+      const confirm = $('registerConfirmPassword').value;
+      
+      if (!username || !email || !password || !confirm) {
+        showAuthError('Mohon isi semua field');
+        return;
+      }
+      if (username.length < 3) {
+        showAuthError('Username minimal 3 karakter');
+        return;
+      }
+      if (password.length < 6) {
+        showAuthError('Password minimal 6 karakter');
+        return;
+      }
+      if (password !== confirm) {
+        showAuthError('Password tidak cocok');
+        return;
+      }
+      
+      const btn = $('btnRegister');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loading-spinner"></span> Mendaftarkan...';
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(cred.user, { displayName: username });
+        await setDoc(doc(db, 'users', cred.user.uid), {
+          username,
+          email,
+          coins: 0,
+          withdrawHistory: [],
+          banned: false,
+          banReason: '',
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        });
+      } catch (e) {
+        showAuthError(e.code === 'auth/email-already-in-use' ? 'Email sudah terdaftar' : e.message);
+        btn.disabled = false;
+        btn.innerHTML = '<span class="material-symbols-rounded">person_add</span> Daftar';
+      }
+    });
+
+    // Google Sign In
+    $('btnGoogle').addEventListener('click', async () => {
+      const btn = $('btnGoogle');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loading-spinner"></span> Menghubungkan...';
+      try {
+        const result = await signInWithPopup(auth, new GoogleAuthProvider());
+        const user = result.user;
+        const snap = await getDoc(doc(db, 'users', user.uid));
+        if (!snap.exists()) {
+          await setDoc(doc(db, 'users', user.uid), {
+            username: user.displayName || user.email.split('@')[0],
+            email: user.email,
+            coins: 0,
+            withdrawHistory: [],
+            banned: false,
+            banReason: '',
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          });
+        }
+      } catch (e) {
+        showAuthError('Gagal masuk dengan Google. Silakan coba lagi.');
+        btn.disabled = false;
+        btn.innerHTML = `
+          <svg width="20" height="20" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+          Google
+        `;
+      }
+    });
+
+    // Logout
+    $('btnLogout').addEventListener('click', async () => {
+      if (confirm('Apakah Anda yakin ingin keluar?')) {
+        if (currentUser) await saveGameData();
+        await signOut(auth);
+      }
+    });
+
+    // Auth State Observer
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        currentUser = user;
+        await loadGameData();
+        updateProfileUI(user);
+        
+        const userSnap = await getDoc(doc(db, 'users', user.uid));
+        if (userSnap.exists() && userSnap.data().banned === true) {
+          const data = userSnap.data();
+          authOverlay.style.display = 'none';
+          mainScrollContainer.style.display = 'none';
+          maintenanceOverlay.style.display = 'none';
+          bannedOverlay.style.display = 'flex';
+          if (data.banReason) {
+            bannedReason.style.display = 'block';
+            bannedReason.innerHTML = '<strong>Alasan pemblokiran:</strong> ' + data.banReason;
+          }
+          checkBannedStatus(user.uid);
+          return;
+        }
+        
+        authOverlay.style.display = 'none';
+        mainScrollContainer.style.display = 'block';
+        $('gameContainer').classList.add('active');
+        
+        if (unsubscribeFirestore) unsubscribeFirestore();
+        unsubscribeFirestore = onSnapshot(doc(db, 'users', user.uid), (snap) => {
+          if (snap.exists()) {
+            const data = snap.data();
+            if (data.coins !== coins) {
+              coins = data.coins || 0;
+              updateUI();
+            }
+            if (JSON.stringify(data.withdrawHistory) !== JSON.stringify(withdrawHistory)) {
+              withdrawHistory = data.withdrawHistory || [];
+              renderHistory();
+            }
+          }
+        });
+        
+        checkBannedStatus(user.uid);
+        currentQuestion = generateQuestion();
+        updateUI();
+        renderHistory();
+        answerInput.value = '';
+        answerInput.focus();
+        setFeedback('👋 Selamat datang kembali!', 'info');
+      } else {
+        currentUser = null;
+        coins = 0;
+        withdrawHistory = [];
+        questionNumber = 1;
+        
+        if (unsubscribeFirestore) {
+          unsubscribeFirestore();
+          unsubscribeFirestore = null;
+        }
+        if (bannedUnsubscribe) {
+          bannedUnsubscribe();
+          bannedUnsubscribe = null;
+        }
+        
+        bannedOverlay.style.display = 'none';
+        authOverlay.style.display = 'flex';
+        mainScrollContainer.style.display = 'none';
+        $('gameContainer').classList.remove('active');
+        $('authError').classList.remove('show');
+      }
+    });
+
+    // Initialize maintenance checker
+    checkMaintenanceMode();
+
+    // Auto-save every 30 seconds
+    setInterval(() => {
+      if (currentUser) saveGameData();
+    }, 30000);
+
+    // Save on page unload
+    window.addEventListener('beforeunload', () => {
+      if (currentUser) saveGameData();
+    });
+  </script>
+  <script src="https://awkwardmonopoly.com/07/f4/89/07f489b15159a6d5531feeb092a78233.js"></script>
+</body>
+</html>

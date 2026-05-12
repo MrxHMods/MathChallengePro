@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=2.0, viewport-fit=cover">
+  <title>Admin Panel Pro | Math Challenge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Font Utama: Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Custom Font Tambahan: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Professional Color Palette */
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-input: #f8fafc;
+      
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      
+      --accent: #3b82f6;
+      --accent-light: #eff6ff;
+      --accent-dark: #1d4ed8;
+      --success: #10b981;
+      --success-light: #ecfdf5;
+      --error: #ef4444;
+      --error-light: #fef2f2;
+      --warning: #f59e0b;
+      --warning-light: #fffbeb;
+      
+      --coin-gold: #f59e0b;
+      --coin-gold-light: #fef3c7;
+      --coin-gold-dark: #b45309;
+      
+      --border: #e2e8f0;
+      --border-light: #f1f5f9;
+      --border-focus: #3b82f6;
+      
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-full: 9999px;
+      
+      --transition: all 0.2s ease;
+      
+      /* Font Family */
+      --font-primary: 'Plus Jakarta Sans', sans-serif;
+      --font-display: 'Inter', 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .material-symbols-rounded {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+      line-height: 1;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      font-family: var(--font-primary);
+      padding: 20px;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      color: var(--text-primary);
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-xl), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      font-family: var(--font-display);
+    }
+
+    h1 {
+      font-size: clamp(1.2rem, 3vw, 1.4rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+    }
+
+    .admin-badge {
+      background: var(--error-light);
+      color: #dc2626;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.7rem;
+      font-weight: 700;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      letter-spacing: 0.5px;
+      font-family: var(--font-display);
+    }
+
+    .maintenance-badge {
+      background: var(--warning-light);
+      color: #b45309;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.7rem;
+      font-weight: 700;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      display: none;
+      align-items: center;
+      gap: 4px;
+      letter-spacing: 0.5px;
+      font-family: var(--font-display);
+    }
+
+    .maintenance-badge.active {
+      display: inline-flex;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-md), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .stat-icon {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      font-family: var(--font-display);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    .stat-card.gold .stat-value {
+      color: var(--coin-gold-dark);
+    }
+
+    .stat-card.success .stat-value {
+      color: #059669;
+    }
+
+    .stat-card.info .stat-value {
+      color: var(--accent-dark);
+    }
+
+    .tab-nav {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+      background: var(--bg-tertiary);
+      padding: 4px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 90px;
+      padding: 10px 16px;
+      text-align: center;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.8rem;
+      transition: var(--transition);
+      color: var(--text-secondary);
+      border: none;
+      background: transparent;
+      font-family: var(--font-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      letter-spacing: 0.3px;
+    }
+
+    .tab-btn.active {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .tab-btn:hover:not(.active) {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .panel {
+      display: none;
+      animation: slideUp 0.3s ease;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .table-container {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      box-shadow: var(--shadow-xl), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px 16px;
+      border-radius: var(--radius-full);
+      border: 2px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-family: var(--font-primary);
+      font-size: 0.85rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+      background: var(--bg-secondary);
+    }
+
+    select.filter-select {
+      padding: 10px 16px;
+      border-radius: var(--radius-full);
+      border: 2px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-family: var(--font-primary);
+      font-size: 0.85rem;
+      outline: none;
+      cursor: pointer;
+      min-width: 140px;
+      transition: var(--transition);
+    }
+
+    select.filter-select:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    th {
+      text-align: left;
+      padding: 12px 14px;
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.7rem;
+      border-bottom: 2px solid var(--border);
+      white-space: nowrap;
+      font-family: var(--font-display);
+    }
+
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-primary);
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: #f8fafc;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-success {
+      background: var(--success-light);
+      color: #059669;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-warning {
+      background: var(--warning-light);
+      color: #b45309;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .badge-error {
+      background: var(--error-light);
+      color: #dc2626;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .badge-danger {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+
+    .btn {
+      border: none;
+      padding: 8px 14px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font-primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-sm {
+      padding: 6px 10px;
+      font-size: 0.7rem;
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-success:hover {
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-error {
+      background: var(--bg-secondary);
+      color: #dc2626;
+      border: 1.5px solid #fecaca;
+    }
+
+    .btn-error:hover {
+      background: #fef2f2;
+      border-color: #fca5a5;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-gold:hover {
+      box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-warning {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-warning:hover {
+      box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-danger:hover {
+      box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1.5px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent-light);
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state .material-symbols-rounded {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      display: block;
+      color: var(--text-muted);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      z-index: 300;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(6px);
+      padding: 20px;
+    }
+
+    .modal {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: 28px 24px;
+      max-width: 460px;
+      width: 95%;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border);
+      max-height: 85vh;
+      overflow-y: auto;
+      animation: slideUp 0.3s ease;
+    }
+
+    .modal h2 {
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-family: var(--font-display);
+    }
+
+    .modal .form-group {
+      margin-bottom: 14px;
+    }
+
+    .modal label {
+      display: block;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .modal input,
+    .modal textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-family: var(--font-primary);
+      font-size: 0.875rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .modal textarea {
+      border-radius: var(--radius-md);
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .modal input:focus,
+    .modal textarea:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+      background: var(--bg-secondary);
+    }
+
+    .btn-confirm {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-family: var(--font-primary);
+      margin-top: 8px;
+      letter-spacing: 0.3px;
+      transition: var(--transition);
+    }
+
+    .btn-cancel {
+      background: transparent;
+      color: var(--text-muted);
+      border: 2px solid var(--border);
+      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-family: var(--font-primary);
+      font-size: 0.85rem;
+      width: 100%;
+      margin-top: 8px;
+      transition: var(--transition);
+    }
+
+    .btn-cancel:hover {
+      background: #f8fafc;
+      color: var(--text-secondary);
+      border-color: #cbd5e1;
+    }
+
+    .switch-container {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .switch-label {
+      flex: 1;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .switch-label small {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 2px;
+    }
+
+    .switch {
+      position: relative;
+      width: 52px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #cbd5e1;
+      transition: 0.3s;
+      border-radius: 28px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      transition: 0.3s;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    input:checked + .slider {
+      background: var(--success);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    .maintenance-form label {
+      display: block;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .maintenance-form input,
+    .maintenance-form textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-family: var(--font-primary);
+      font-size: 0.875rem;
+      outline: none;
+      margin-bottom: 12px;
+      transition: var(--transition);
+    }
+
+    .maintenance-form textarea {
+      border-radius: var(--radius-md);
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .maintenance-form input:focus,
+    .maintenance-form textarea:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+      background: var(--bg-secondary);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      padding: 14px 20px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      z-index: 400;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      animation: slideIn 0.3s ease;
+      max-width: 380px;
+      font-family: var(--font-primary);
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--success);
+    }
+
+    .toast.error {
+      border-left: 4px solid var(--error);
+    }
+
+    .toast.info {
+      border-left: 4px solid var(--accent);
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .info-card {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .info-card h3 {
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-primary);
+      font-weight: 700;
+      font-family: var(--font-display);
+    }
+
+    .info-card p {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Leaderboard Styles */
+    .leaderboard-grid {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .leaderboard-top3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .leaderboard-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 24px 20px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .leaderboard-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .leaderboard-card.rank-1 {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid #f59e0b;
+    }
+
+    .leaderboard-card.rank-2 {
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      border: 2px solid #94a3b8;
+    }
+
+    .leaderboard-card.rank-3 {
+      background: linear-gradient(135deg, #fef2f2 0%, #fed7aa 100%);
+      border: 2px solid #fb923c;
+    }
+
+    .rank-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      font-family: var(--font-display);
+    }
+
+    .rank-1 .rank-badge {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      font-size: 2rem;
+    }
+
+    .rank-2 .rank-badge {
+      background: linear-gradient(135deg, #94a3b8, #64748b);
+      color: white;
+      font-size: 1.8rem;
+    }
+
+    .rank-3 .rank-badge {
+      background: linear-gradient(135deg, #fb923c, #ea580c);
+      color: white;
+      font-size: 1.6rem;
+    }
+
+    .leaderboard-username {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      font-family: var(--font-display);
+    }
+
+    .leaderboard-coins {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--coin-gold-dark);
+      margin-bottom: 4px;
+    }
+
+    .leaderboard-rupiah {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .leaderboard-table {
+      margin-top: 16px;
+    }
+
+    .leaderboard-table tr.rank-row {
+      transition: var(--transition);
+    }
+
+    .leaderboard-table tr.rank-row:hover {
+      background: #f8fafc;
+    }
+
+    .rank-number {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--accent);
+      font-family: var(--font-display);
+    }
+
+    .rank-top3 {
+      color: var(--coin-gold-dark);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 12px;
+      }
+      .header {
+        padding: 16px;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .stat-value {
+        font-size: 1.3rem;
+      }
+      th, td {
+        padding: 8px 10px;
+        font-size: 0.75rem;
+      }
+      .leaderboard-top3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <div class="brand-badge">
+          <span class="material-symbols-rounded">psychology</span> MATH CHALLENGE PRO
+        </div>
+        <h1>
+          <span class="material-symbols-rounded" style="color: #3b82f6;">admin_panel_settings</span> 
+          Admin Panel
+        </h1>
+        <span class="admin-badge">ADMIN</span>
+        <span class="maintenance-badge" id="maintenanceBadge">
+          <span class="material-symbols-rounded" style="font-size:0.9rem;">construction</span> 
+          MAINTENANCE
+        </span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span id="lastUpdated" style="font-size:0.75rem;color:var(--text-muted);font-weight:500;font-family:var(--font-display);">Memuat...</span>
+        <button class="btn btn-primary btn-sm" id="btnRefresh">
+          <span class="material-symbols-rounded">refresh</span>
+        </button>
+        <button class="btn btn-warning btn-sm" id="btnGoMaintenance">
+          <span class="material-symbols-rounded">construction</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card info">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value" id="totalUsers">0</div>
+        <div class="stat-label">Total Pengguna</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-icon">🪙</div>
+        <div class="stat-value" id="totalCoins">0</div>
+        <div class="stat-label">Total Koin</div>
+      </div>
+      <div class="stat-card success">
+        <div class="stat-icon">💰</div>
+        <div class="stat-value" id="totalWithdrawals">0</div>
+        <div class="stat-label">Penarikan</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📊</div>
+        <div class="stat-value" id="totalRupiah">Rp 0</div>
+        <div class="stat-label">Total Rupiah</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="users">👥 Pengguna</button>
+      <button class="tab-btn" data-tab="leaderboard">🏆 Leaderboard</button>
+      <button class="tab-btn" data-tab="withdrawals">💰 Penarikan</button>
+      <button class="tab-btn" data-tab="maintenanceTab">🔧 Maintenance</button>
+    </div>
+
+    <!-- Users Panel -->
+    <div class="panel active" id="usersPanel">
+      <div class="table-container">
+        <div class="search-bar">
+          <input type="text" class="search-input" id="userSearch" placeholder="Cari pengguna...">
+          <select id="bannedFilter" class="filter-select">
+            <option value="all">Semua Status</option>
+            <option value="active">Aktif</option>
+            <option value="banned">Dibanned</option>
+          </select>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Koin</th>
+                <th>Rupiah</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <tr>
+                <td colspan="6">
+                  <div class="empty-state">
+                    <span class="material-symbols-rounded">hourglass_empty</span>
+                    Memuat data...
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaderboard Panel -->
+    <div class="panel" id="leaderboardPanel">
+      <div class="table-container">
+        <div class="search-bar">
+          <input type="text" class="search-input" id="leaderboardSearch" placeholder="Cari di leaderboard...">
+          <select id="leaderboardFilter" class="filter-select">
+            <option value="all">Semua Pengguna</option>
+            <option value="active">Hanya Aktif</option>
+            <option value="top10">Top 10</option>
+            <option value="top50">Top 50</option>
+          </select>
+        </div>
+        
+        <!-- Top 3 Cards -->
+        <div class="leaderboard-top3" id="leaderboardTop3">
+          <div class="empty-state">
+            <span class="material-symbols-rounded">emoji_events</span>
+            Memuat leaderboard...
+          </div>
+        </div>
+        
+        <!-- Leaderboard Table -->
+        <div style="overflow-x:auto;">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>Peringkat</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Koin</th>
+                <th>Rupiah</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardTableBody">
+              <tr>
+                <td colspan="6">
+                  <div class="empty-state">
+                    <span class="material-symbols-rounded">leaderboard</span>
+                    Memuat data...
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Withdrawals Panel -->
+    <div class="panel" id="withdrawalsPanel">
+      <div class="table-container">
+        <div class="search-bar">
+          <input type="text" class="search-input" id="withdrawalSearch" placeholder="Cari penarikan...">
+          <select id="statusFilter" class="filter-select">
+            <option value="all">Semua Status</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Disetujui</option>
+            <option value="rejected">Ditolak</option>
+          </select>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Pengguna</th>
+                <th>Metode</th>
+                <th>No. Rek</th>
+                <th>Nama</th>
+                <th>Koin</th>
+                <th>Rupiah</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="withdrawalsTableBody">
+              <tr>
+                <td colspan="8">
+                  <div class="empty-state">
+                    <span class="material-symbols-rounded">receipt_long</span>
+                    Memuat data...
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Maintenance Panel -->
+    <div class="panel" id="maintenanceTabPanel">
+      <div class="table-container">
+        <div class="info-card">
+          <h3>
+            <span class="material-symbols-rounded" style="color: #3b82f6;">info</span> 
+            Mode Maintenance
+          </h3>
+          <p>
+            Mode maintenance akan menampilkan halaman perbaikan kepada semua pengguna. 
+            Pengguna tidak dapat mengakses aplikasi selama mode ini aktif. 
+            Klik <strong>Simpan</strong> untuk menerapkan perubahan.
+          </p>
+        </div>
+        <div class="switch-container">
+          <div class="switch-label">
+            <strong>Status Maintenance</strong>
+            <small id="maintenanceStatusText">Nonaktif</small>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="maintenanceToggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="maintenance-form">
+          <label>Estimasi Waktu Selesai</label>
+          <input type="text" id="maintenanceTime" placeholder="Contoh: 2 jam, 30 menit">
+          <label>Pesan untuk Pengguna</label>
+          <textarea id="maintenanceMsg" placeholder="Tulis pesan informasi maintenance..."></textarea>
+          <button class="btn btn-primary" id="btnSaveMaintenance" style="width:100%;">
+            <span class="material-symbols-rounded">save</span> Simpan Pengaturan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Coins Modal -->
+  <div class="modal-overlay" id="editCoinsModal" style="display:none;">
+    <div class="modal">
+      <h2>
+        <span class="material-symbols-rounded" style="color: #f59e0b;">edit</span> 
+        Edit Koin Pengguna
+      </h2>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="editCoinsUsername" disabled style="opacity:0.7;cursor:not-allowed;">
+      </div>
+      <div class="form-group">
+        <label>Koin Saat Ini</label>
+        <input type="text" id="editCoinsCurrent" disabled style="opacity:0.7;cursor:not-allowed;">
+      </div>
+      <div class="form-group">
+        <label>Koin Baru</label>
+        <input type="number" id="editCoinsNew" min="0" placeholder="Masukkan jumlah koin baru">
+      </div>
+      <button class="btn-confirm btn-gold" id="btnSaveCoins">
+        <span class="material-symbols-rounded">save</span> Simpan Perubahan
+      </button>
+      <button class="btn-cancel" id="btnCancelCoins">Batal</button>
+    </div>
+  </div>
+
+  <!-- Ban Modal -->
+  <div class="modal-overlay" id="banModal" style="display:none;">
+    <div class="modal">
+      <h2>
+        <span class="material-symbols-rounded" style="color:#ef4444;">block</span> 
+        <span id="banModalTitle">Ban Pengguna</span>
+      </h2>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="banUsername" disabled style="opacity:0.7;cursor:not-allowed;">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="text" id="banEmail" disabled style="opacity:0.7;cursor:not-allowed;">
+      </div>
+      <div class="form-group">
+        <label>Alasan Pemblokiran</label>
+        <textarea id="banReason" placeholder="Tulis alasan banned..."></textarea>
+      </div>
+      <button class="btn-confirm btn-danger" id="btnConfirmBan">
+        <span class="material-symbols-rounded">block</span> Ban Pengguna
+      </button>
+      <button class="btn-cancel" id="btnCancelBan">Batal</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, updateDoc, setDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCjvgo0feNC_cXodrHvLgYQpkJB7fJjX2g",
+      authDomain: "quizrupiah-4d969.firebaseapp.com",
+      projectId: "quizrupiah-4d969",
+      storageBucket: "quizrupiah-4d969.firebasestorage.app",
+      messagingSenderId: "692633050429",
+      appId: "1:692633050429:web:a3dc336aa8857cd919b954"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let allUsers = [],
+      allWithdrawals = [],
+      currentEditUser = null,
+      currentBanUser = null;
+    const COIN_TO_RUPIAH = 10;
+    const $ = id => document.getElementById(id);
+
+    function formatRupiah(a) {
+      return 'Rp ' + a.toLocaleString('id-ID');
+    }
+
+    function showToast(msg, type = 'info') {
+      const old = document.querySelector('.toast');
+      if (old) old.remove();
+      const t = document.createElement('div');
+      t.className = `toast ${type}`;
+      const icon = type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info';
+      t.innerHTML = `<span class="material-symbols-rounded">${icon}</span> ${msg}`;
+      document.body.appendChild(t);
+      setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transition = 'opacity 0.3s';
+        setTimeout(() => t.remove(), 300);
+      }, 3000);
+    }
+
+    async function loadUsers() {
+      const snap = await getDocs(collection(db, 'users'));
+      allUsers = [];
+      snap.forEach(d => {
+        const data = d.data();
+        allUsers.push({
+          uid: d.id,
+          username: data.username || 'Unknown',
+          email: data.email || '-',
+          coins: data.coins || 0,
+          withdrawHistory: data.withdrawHistory || [],
+          createdAt: data.createdAt || null,
+          banned: data.banned || false,
+          banReason: data.banReason || ''
+        });
+      });
+    }
+
+    function processWithdrawals() {
+      allWithdrawals = [];
+      allUsers.forEach(u => {
+        if (u.withdrawHistory) {
+          u.withdrawHistory.forEach((w, i) => {
+            allWithdrawals.push({
+              ...w,
+              userId: u.uid,
+              username: u.username,
+              email: u.email,
+              withdrawalIndex: i,
+              status: w.status || 'pending'
+            });
+          });
+        }
+      });
+      allWithdrawals.sort((a, b) => {
+        const dateA = a.timestamp ? new Date(a.timestamp) : new Date(0);
+        const dateB = b.timestamp ? new Date(b.timestamp) : new Date(0);
+        return dateB - dateA;
+      });
+    }
+
+    function updateStats() {
+      $('totalUsers').textContent = allUsers.length;
+      
+      let tc = 0;
+      allUsers.forEach(u => tc += u.coins);
+      $('totalCoins').textContent = tc.toLocaleString('id-ID');
+      
+      $('totalWithdrawals').textContent = allWithdrawals.length;
+      
+      let tr = 0;
+      allWithdrawals.forEach(w => tr += (w.amount || 0) * COIN_TO_RUPIAH);
+      $('totalRupiah').textContent = formatRupiah(tr);
+      
+      $('lastUpdated').textContent = 'Diperbarui: ' + new Date().toLocaleTimeString('id-ID');
+    }
+
+    function renderUsers(f = '', bf = 'all') {
+      let filtered = allUsers;
+      if (f) {
+        filtered = filtered.filter(u => 
+          (u.username + ' ' + u.email).toLowerCase().includes(f.toLowerCase())
+        );
+      }
+      if (bf === 'banned') filtered = filtered.filter(u => u.banned);
+      if (bf === 'active') filtered = filtered.filter(u => !u.banned);
+      
+      if (!filtered.length) {
+        $('usersTableBody').innerHTML = `
+          <tr>
+            <td colspan="6">
+              <div class="empty-state">
+                <span class="material-symbols-rounded">person_off</span>
+                Tidak ada pengguna ditemukan
+              </div>
+            </td>
+          </tr>`;
+        return;
+      }
+      
+      $('usersTableBody').innerHTML = filtered.map(u => `
+        <tr>
+          <td>
+            <strong>${u.username}</strong>
+            ${u.banned ? ' <span class="badge badge-danger">BANNED</span>' : ''}
+          </td>
+          <td style="color:var(--text-secondary);font-size:0.8rem;">${u.email}</td>
+          <td><span class="badge badge-warning">🪙 ${u.coins.toLocaleString('id-ID')}</span></td>
+          <td style="color:#059669;font-weight:600;">${formatRupiah(u.coins * COIN_TO_RUPIAH)}</td>
+          <td>
+            ${u.banned ? 
+              '<span class="badge badge-error">🔒 Banned</span>' : 
+              '<span class="badge badge-success">✅ Aktif</span>'
+            }
+          </td>
+          <td style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button class="btn btn-gold btn-sm edit-btn" data-uid="${u.uid}">
+              <span class="material-symbols-rounded">edit</span>
+            </button>
+            ${u.banned ? 
+              `<button class="btn btn-success btn-sm unban-btn" data-uid="${u.uid}">
+                <span class="material-symbols-rounded">lock_open</span>
+              </button>` : 
+              `<button class="btn btn-danger btn-sm ban-btn" data-uid="${u.uid}">
+                <span class="material-symbols-rounded">block</span>
+              </button>`
+            }
+          </td>
+        </tr>
+      `).join('');
+      
+      document.querySelectorAll('.edit-btn').forEach(b => 
+        b.addEventListener('click', () => openEditCoins(b.dataset.uid))
+      );
+      document.querySelectorAll('.ban-btn').forEach(b => 
+        b.addEventListener('click', () => openBanModal(b.dataset.uid))
+      );
+      document.querySelectorAll('.unban-btn').forEach(b => 
+        b.addEventListener('click', () => unbanUser(b.dataset.uid))
+      );
+    }
+
+    // Leaderboard Functions
+    function getLeaderboardData(filter = 'all', search = '') {
+      let users = [...allUsers];
+      
+      // Filter by status
+      if (filter === 'active') {
+        users = users.filter(u => !u.banned);
+      }
+      
+      // Search
+      if (search) {
+        users = users.filter(u => 
+          (u.username + ' ' + u.email).toLowerCase().includes(search.toLowerCase())
+        );
+      }
+      
+      // Sort by coins descending
+      users.sort((a, b) => b.coins - a.coins);
+      
+      // Apply top limits
+      if (filter === 'top10') users = users.slice(0, 10);
+      if (filter === 'top50') users = users.slice(0, 50);
+      
+      return users;
+    }
+
+    function renderLeaderboardTop3(users) {
+      const top3 = users.slice(0, 3);
+      const container = $('leaderboardTop3');
+      
+      if (!top3.length) {
+        container.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;">
+            <span class="material-symbols-rounded">emoji_events</span>
+            Tidak ada data leaderboard
+          </div>`;
+        return;
+      }
+      
+      const medals = ['🥇', '🥈', '🥉'];
+      
+      container.innerHTML = top3.map((u, i) => `
+        <div class="leaderboard-card rank-${i + 1}">
+          <div class="rank-badge">${medals[i]}</div>
+          <div class="leaderboard-username">${u.username}</div>
+          <div class="leaderboard-coins">🪙 ${u.coins.toLocaleString('id-ID')} Koin</div>
+          <div class="leaderboard-rupiah">${formatRupiah(u.coins * COIN_TO_RUPIAH)}</div>
+          ${u.banned ? '<span class="badge badge-danger" style="margin-top:8px;">BANNED</span>' : ''}
+        </div>
+      `).join('');
+    }
+
+    function renderLeaderboardTable(users) {
+      const tbody = $('leaderboardTableBody');
+      
+      if (!users.length) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6">
+              <div class="empty-state">
+                <span class="material-symbols-rounded">leaderboard</span>
+                Tidak ada data ditemukan
+              </div>
+            </td>
+          </tr>`;
+        return;
+      }
+      
+      tbody.innerHTML = users.map((u, i) => {
+        const rank = i + 1;
+        let rankClass = '';
+        let rankIcon = '';
+        
+        if (rank === 1) {
+          rankClass = 'rank-top3';
+          rankIcon = '🥇';
+        } else if (rank === 2) {
+          rankClass = 'rank-top3';
+          rankIcon = '🥈';
+        } else if (rank === 3) {
+          rankClass = 'rank-top3';
+          rankIcon = '🥉';
+        }
+        
+        return `
+          <tr class="rank-row">
+            <td>
+              <span class="rank-number ${rankClass}">
+                ${rankIcon ? rankIcon + ' ' : ''}#${rank}
+              </span>
+            </td>
+            <td>
+              <strong>${u.username}</strong>
+              ${u.banned ? ' <span class="badge badge-danger">BANNED</span>' : ''}
+            </td>
+            <td style="color:var(--text-secondary);font-size:0.8rem;">${u.email}</td>
+            <td>
+              <span class="badge badge-warning">🪙 ${u.coins.toLocaleString('id-ID')}</span>
+            </td>
+            <td style="color:#059669;font-weight:600;">${formatRupiah(u.coins * COIN_TO_RUPIAH)}</td>
+            <td>
+              ${u.banned ? 
+                '<span class="badge badge-error">🔒 Banned</span>' : 
+                '<span class="badge badge-success">✅ Aktif</span>'
+              }
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderLeaderboard() {
+      const filter = $('leaderboardFilter').value;
+      const search = $('leaderboardSearch').value;
+      const users = getLeaderboardData(filter, search);
+      
+      renderLeaderboardTop3(users);
+      renderLeaderboardTable(users);
+    }
+
+    function renderWithdrawals(f = '', s = 'all') {
+      let filtered = allWithdrawals;
+      if (f) {
+        filtered = filtered.filter(w => 
+          (w.username + ' ' + w.name + ' ' + w.account + ' ' + (w.methodLabel || '')).toLowerCase().includes(f.toLowerCase())
+        );
+      }
+      if (s !== 'all') filtered = filtered.filter(w => w.status === s);
+      
+      if (!filtered.length) {
+        $('withdrawalsTableBody').innerHTML = `
+          <tr>
+            <td colspan="8">
+              <div class="empty-state">
+                <span class="material-symbols-rounded">receipt_long</span>
+                Tidak ada penarikan ditemukan
+              </div>
+            </td>
+          </tr>`;
+        return;
+      }
+      
+      $('withdrawalsTableBody').innerHTML = filtered.map(w => {
+        const sb = {
+          pending: '<span class="badge badge-warning">⏳ Pending</span>',
+          approved: '<span class="badge badge-success">✅ Disetujui</span>',
+          rejected: '<span class="badge badge-error">❌ Ditolak</span>'
+        }[w.status] || '<span class="badge badge-warning">⏳ Pending</span>';
+        
+        return `
+          <tr>
+            <td>
+              <strong>${w.username}</strong>
+              <br><small style="color:var(--text-muted);">${w.email}</small>
+            </td>
+            <td>${w.methodLabel || w.method || '-'}</td>
+            <td style="font-family:monospace;">${w.account || '-'}</td>
+            <td>${w.name || '-'}</td>
+            <td>🪙 ${(w.amount || 0).toLocaleString('id-ID')}</td>
+            <td style="color:#059669;font-weight:600;">${w.rupiah || formatRupiah((w.amount || 0) * COIN_TO_RUPIAH)}</td>
+            <td>${sb}</td>
+            <td>
+              ${w.status === 'pending' ? `
+                <div style="display:flex;gap:4px;">
+                  <button class="btn btn-success btn-sm appr-btn" data-uid="${w.userId}" data-idx="${w.withdrawalIndex}">
+                    <span class="material-symbols-rounded">check</span>
+                  </button>
+                  <button class="btn btn-error btn-sm rej-btn" data-uid="${w.userId}" data-idx="${w.withdrawalIndex}">
+                    <span class="material-symbols-rounded">close</span>
+                  </button>
+                </div>
+              ` : ''}
+            </td>
+          </tr>
+        `;
+      }).join('');
+      
+      document.querySelectorAll('.appr-btn').forEach(b => 
+        b.addEventListener('click', () => approveWithdrawal(b.dataset.uid, parseInt(b.dataset.idx)))
+      );
+      document.querySelectorAll('.rej-btn').forEach(b => 
+        b.addEventListener('click', () => rejectWithdrawal(b.dataset.uid, parseInt(b.dataset.idx)))
+      );
+    }
+
+    function refreshUI() {
+      renderUsers($('userSearch').value, $('bannedFilter').value);
+      renderWithdrawals($('withdrawalSearch').value, $('statusFilter').value);
+      renderLeaderboard();
+      updateStats();
+    }
+
+    async function refreshAll() {
+      await loadUsers();
+      processWithdrawals();
+      refreshUI();
+      showToast('Data berhasil diperbarui', 'success');
+    }
+
+    // Edit Coins Functions
+    function openEditCoins(uid) {
+      const u = allUsers.find(x => x.uid === uid);
+      if (!u) return;
+      currentEditUser = u;
+      $('editCoinsUsername').value = u.username;
+      $('editCoinsCurrent').value = u.coins.toLocaleString('id-ID');
+      $('editCoinsNew').value = u.coins;
+      $('editCoinsModal').style.display = 'flex';
+    }
+
+    function closeEditCoins() {
+      $('editCoinsModal').style.display = 'none';
+      currentEditUser = null;
+    }
+
+    async function saveCoinsEdit() {
+      if (!currentEditUser) return;
+      const nc = parseInt($('editCoinsNew').value);
+      if (isNaN(nc) || nc < 0) {
+        showToast('Jumlah koin tidak valid', 'error');
+        return;
+      }
+      try {
+        await updateDoc(doc(db, 'users', currentEditUser.uid), {
+          coins: nc,
+          updatedAt: serverTimestamp()
+        });
+        showToast(`Koin ${currentEditUser.username} berhasil diubah ke ${nc.toLocaleString('id-ID')}`, 'success');
+        closeEditCoins();
+        await refreshAll();
+      } catch (e) {
+        showToast('Gagal mengupdate koin: ' + e.message, 'error');
+      }
+    }
+
+    // Ban/Unban Functions
+    function openBanModal(uid) {
+      const u = allUsers.find(x => x.uid === uid);
+      if (!u) return;
+      currentBanUser = u;
+      $('banModalTitle').textContent = 'Ban Pengguna';
+      $('banUsername').value = u.username;
+      $('banEmail').value = u.email;
+      $('banReason').value = '';
+      $('btnConfirmBan').innerHTML = '<span class="material-symbols-rounded">block</span> Ban Pengguna';
+      $('btnConfirmBan').className = 'btn-confirm btn-danger';
+      $('banModal').style.display = 'flex';
+    }
+
+    function closeBanModal() {
+      $('banModal').style.display = 'none';
+      currentBanUser = null;
+    }
+
+    async function confirmBan() {
+      if (!currentBanUser) return;
+      const reason = $('banReason').value.trim();
+      if (!confirm(`Apakah Anda yakin ingin mem-blokir ${currentBanUser.username}?`)) return;
+      
+      try {
+        await updateDoc(doc(db, 'users', currentBanUser.uid), {
+          banned: true,
+          banReason: reason || '',
+          updatedAt: serverTimestamp()
+        });
+        showToast(`🔒 ${currentBanUser.username} telah diblokir`, 'success');
+        closeBanModal();
+        await refreshAll();
+      } catch (e) {
+        showToast('Gagal mem-blokir pengguna: ' + e.message, 'error');
+      }
+    }
+
+    async function unbanUser(uid) {
+      const u = allUsers.find(x => x.uid === uid);
+      if (!u) return;
+      if (!confirm(`Apakah Anda yakin ingin membuka blokir ${u.username}?`)) return;
+      
+      try {
+        await updateDoc(doc(db, 'users', uid), {
+          banned: false,
+          banReason: '',
+          updatedAt: serverTimestamp()
+        });
+        showToast(`🔓 ${u.username} telah di-unbanned`, 'success');
+        await refreshAll();
+      } catch (e) {
+        showToast('Gagal unban pengguna: ' + e.message, 'error');
+      }
+    }
+
+    // Withdrawal Functions
+    async function approveWithdrawal(uid, idx) {
+      if (!confirm('Setujui penarikan ini?')) return;
+      const u = allUsers.find(x => x.uid === uid);
+      if (!u) return;
+      
+      try {
+        const h = [...u.withdrawHistory];
+        if (h[idx]) {
+          h[idx] = {
+            ...h[idx],
+            status: 'approved',
+            approvedAt: new Date().toISOString()
+          };
+        }
+        await updateDoc(doc(db, 'users', uid), {
+          withdrawHistory: h,
+          updatedAt: serverTimestamp()
+        });
+        showToast('✅ Penarikan disetujui', 'success');
+        await refreshAll();
+      } catch (e) {
+        showToast('Gagal menyetujui penarikan: ' + e.message, 'error');
+      }
+    }
+
+    async function rejectWithdrawal(uid, idx) {
+      if (!confirm('Tolak penarikan ini? Koin akan dikembalikan ke pengguna.')) return;
+      const u = allUsers.find(x => x.uid === uid);
+      if (!u) return;
+      const w = u.withdrawHistory[idx];
+      if (!w) return;
+      
+      try {
+        const refund = w.amount || 0;
+        const h = [...u.withdrawHistory];
+        if (h[idx]) {
+          h[idx] = {
+            ...h[idx],
+            status: 'rejected',
+            rejectedAt: new Date().toISOString()
+          };
+        }
+        await updateDoc(doc(db, 'users', uid), {
+          coins: u.coins + refund,
+          withdrawHistory: h,
+          updatedAt: serverTimestamp()
+        });
+        showToast(`❌ Ditolak. ${refund.toLocaleString('id-ID')} koin dikembalikan`, 'info');
+        await refreshAll();
+      } catch (e) {
+        showToast('Gagal menolak penarikan: ' + e.message, 'error');
+      }
+    }
+
+    // Maintenance Functions
+    async function loadMaintenance() {
+      const { getDoc } = await import("https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js");
+      const snap = await getDoc(doc(db, 'settings', 'maintenance'));
+      if (snap.exists()) {
+        const d = snap.data();
+        $('maintenanceToggle').checked = d.enabled === true;
+        $('maintenanceTime').value = d.estimatedTime || '';
+        $('maintenanceMsg').value = d.message || '';
+      } else {
+        $('maintenanceToggle').checked = false;
+        $('maintenanceTime').value = '';
+        $('maintenanceMsg').value = '';
+      }
+      updateMaintenanceBadge();
+    }
+
+    function updateMaintenanceBadge() {
+      const on = $('maintenanceToggle').checked;
+      $('maintenanceBadge').classList.toggle('active', on);
+      $('maintenanceStatusText').textContent = on ? 'Aktif' : 'Nonaktif';
+      $('maintenanceStatusText').style.color = on ? '#b45309' : 'var(--text-muted)';
+    }
+
+    $('maintenanceToggle').addEventListener('change', updateMaintenanceBadge);
+
+    async function saveMaintenance() {
+      const enabled = $('maintenanceToggle').checked;
+      const btn = $('btnSaveMaintenance');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loading-spinner"></span> Menyimpan...';
+      
+      try {
+        await setDoc(doc(db, 'settings', 'maintenance'), {
+          enabled,
+          estimatedTime: enabled ? $('maintenanceTime').value.trim() : '',
+          message: enabled ? $('maintenanceMsg').value.trim() : '',
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+        
+        updateMaintenanceBadge();
+        
+        if (!enabled) {
+          $('maintenanceTime').value = '';
+          $('maintenanceMsg').value = '';
+        }
+        
+        showToast(
+          enabled ? '✅ Mode Maintenance DIAKTIFKAN' : '✅ Mode Maintenance DINONAKTIFKAN',
+          'success'
+        );
+      } catch (e) {
+        showToast('❌ Gagal menyimpan: ' + e.message, 'error');
+        $('maintenanceToggle').checked = !enabled;
+        updateMaintenanceBadge();
+      }
+      
+      btn.disabled = false;
+      btn.innerHTML = '<span class="material-symbols-rounded">save</span> Simpan Pengaturan';
+    }
+
+    // Real-time listeners
+    onSnapshot(doc(db, 'settings', 'maintenance'), snap => {
+      if (snap.exists()) {
+        const d = snap.data();
+        if (document.activeElement !== $('maintenanceTime') && document.activeElement !== $('maintenanceMsg')) {
+          $('maintenanceToggle').checked = d.enabled === true;
+          $('maintenanceTime').value = d.estimatedTime || '';
+          $('maintenanceMsg').value = d.message || '';
+        } else {
+          $('maintenanceToggle').checked = d.enabled === true;
+        }
+      } else {
+        $('maintenanceToggle').checked = false;
+        if (document.activeElement !== $('maintenanceTime') && document.activeElement !== $('maintenanceMsg')) {
+          $('maintenanceTime').value = '';
+          $('maintenanceMsg').value = '';
+        }
+      }
+      updateMaintenanceBadge();
+    });
+
+    onSnapshot(collection(db, 'users'), async () => {
+      await loadUsers();
+      processWithdrawals();
+      refreshUI();
+    });
+
+    // Event Listeners
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        const p = $(b.dataset.tab + 'Panel');
+        if (p) p.classList.add('active');
+        
+        // Refresh leaderboard when switching to leaderboard tab
+        if (b.dataset.tab === 'leaderboard') {
+          renderLeaderboard();
+        }
+      });
+    });
+
+    $('btnGoMaintenance').addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+      document.querySelector('[data-tab="maintenanceTab"]').classList.add('active');
+      $('maintenanceTabPanel').classList.add('active');
+    });
+
+    $('userSearch').addEventListener('input', () => {
+      renderUsers($('userSearch').value, $('bannedFilter').value);
+    });
+    
+    $('bannedFilter').addEventListener('change', () => {
+      renderUsers($('userSearch').value, $('bannedFilter').value);
+    });
+    
+    $('withdrawalSearch').addEventListener('input', () => {
+      renderWithdrawals($('withdrawalSearch').value, $('statusFilter').value);
+    });
+    
+    $('statusFilter').addEventListener('change', () => {
+      renderWithdrawals($('withdrawalSearch').value, $('statusFilter').value);
+    });
+    
+    // Leaderboard event listeners
+    $('leaderboardSearch').addEventListener('input', renderLeaderboard);
+    $('leaderboardFilter').addEventListener('change', renderLeaderboard);
+    
+    $('btnRefresh').addEventListener('click', refreshAll);
+    $('btnSaveMaintenance').addEventListener('click', saveMaintenance);
+    $('btnSaveCoins').addEventListener('click', saveCoinsEdit);
+    $('btnCancelCoins').addEventListener('click', closeEditCoins);
+    $('btnConfirmBan').addEventListener('click', confirmBan);
+    $('btnCancelBan').addEventListener('click', closeBanModal);
+    
+    $('editCoinsModal').addEventListener('click', e => {
+      if (e.target === $('editCoinsModal')) closeEditCoins();
+    });
+    
+    $('banModal').addEventListener('click', e => {
+      if (e.target === $('banModal')) closeBanModal();
+    });
+    
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeEditCoins();
+        closeBanModal();
+      }
+    });
+
+    // Initialize
+    (async () => {
+      await loadUsers();
+      processWithdrawals();
+      refreshUI();
+      await loadMaintenance();
+      showToast('Admin Panel siap digunakan', 'success');
+    })();
+  </script>
+</body>
+</html>
